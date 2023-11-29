@@ -11,13 +11,9 @@ on:
       - reopened
       - synchronize
       - ready_for_review
-    paths-ignore:
-      - '*.md'
   push:
     branches:
       - main
-    paths-ignore:
-      - '*.md'
   workflow_dispatch:
 
 # Testing only needs permissions to read the repository contents.
@@ -27,6 +23,7 @@ permissions:
 jobs:
   # Ensure project builds before running testing matrix
   build:
+    if: '!github.github.event.pull_request.draft'
     name: Build
     runs-on: ubuntu-latest
     steps:
