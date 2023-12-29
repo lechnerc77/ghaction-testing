@@ -1,21 +1,21 @@
-name: Bug Report
-description: Report broken functionality within Radius
-title: "<BUG TITLE>"
-labels: ["bug"]
+name: Engineering Improvement
+description: Report problems or suggestions to improve the Radius engineering processes and/or pipelines
+title: "<TITLE>"
+labels: ["maintenance"]
 body:
   - type: markdown
     attributes:
-      value: "## Bug information"
+      value: "## Engineering Improvement"
   - type: textarea
     attributes:
-      label: Steps to reproduce
-      description: How can we recreate this bug? Be specific.
+      label: Area for Improvement
+      description: What engineering process or tools can be improved? Build? Testing? ...? Be specific.
     validations:
       required: true
   - type: textarea
     attributes:
       label: Observed behavior
-      description: What you're experiencing that you believe is a bug.
+      description: What you're experiencing that you believe could be improved.
       placeholder: |
         If applicable, add screenshots to help explain your problem.
 
@@ -25,13 +25,13 @@ body:
   - type: textarea
     attributes:
       label: Desired behavior
-      description: What you're expecting to happen.
+      description: What you'd like to happen.
     validations:
       required: true
   - type: textarea
     attributes:
-      label: Workaround
-      description: Have you found a workaround to get you unblocked?
+      label: Proposed Fix
+      description: Have you found a way to implement or fix the issue?
     validations:
       required: false
   - type: markdown
@@ -55,7 +55,7 @@ body:
   - type: textarea
     attributes:
       label: Additional context
-      description: Add any other context about the problem here.
+      description: Add any other context about the problem here
       placeholder: |
         Links? References? Anything that will give us more context about the issue you are encountering!
 
@@ -65,7 +65,7 @@ body:
   - type: checkboxes
     attributes:
       label: Would you like to support us?
-      description: Would you like to support us in fixing this bug?
+      description: Would you like to support us in improving Radius engineering processes and/or pipelines?
       options:
         - label: Yes, I would like to support you
           required: false
