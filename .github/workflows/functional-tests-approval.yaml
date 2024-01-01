@@ -1,0 +1,53 @@
+name: 'Approve Functional Tests'
+on:
+  pull_request:
+    branches:
+      - main
+      - features/*
+      - release/*
+jobs:
+  approve-functional-tests-run:
+    name: 'Approve Functional Tests'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Use custom actions
+      uses: actions/checkout@v3
+    - name: Save PR number
+      run: |
+        echo "PR_NUMBER=${{ github.event.number }}"
+  report-change-details:
+    name: 'Report change details'
+    runs-on: ubuntu-latest
+    needs: approve-functional-tests-run
+    steps:
+    - name: Checkout code with depth 0
+      id: changed-files
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: Determine changed files
+      uses: tj-actions/changed-files@v41
+    - name: Evaluate changed files
+      env:
+        ALL_CHANGED_FILES_COUNT: ${{ steps.changed-files.outputs.all_changed_files_count }}
+        ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+      uses: actions/github-script@v7
+      with:
+        script: |
+          versionChanged = 'false';
+          if (process.env.ALL_CHANGED_FILES_COUNT === '1') {
+            process.env.ALL_CHANGED_FILES.forEach(file => {
+                if (file === 'versions.yaml') {
+                    versionChanged = 'true';
+                }
+            });
+          }
+        
+          github.rest.repos.createDispatchEvent({
+            owner: "lechnerc77",
+            repo: "ghaction-testing",
+            event_type: "run-functional-tests",
+            client_payload: {
+                "versionChanged": versionChanged
+            }
+          })
