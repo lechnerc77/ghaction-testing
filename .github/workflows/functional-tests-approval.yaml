@@ -41,7 +41,10 @@ jobs:
                 }
             });
           }
-        
+          
+          console.log(`ALL_CHANGED_FILES_COUNT: ${process.env.ALL_CHANGED_FILES_COUNT}`);
+          console.log(`versionChanged: ${versionChanged}`);
+
           github.rest.repos.createDispatchEvent({
             owner: "lechnerc77",
             repo: "ghaction-testing",
