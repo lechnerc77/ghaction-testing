@@ -39,6 +39,7 @@ jobs:
           versionChanged = 'false'
           if (process.env.ALL_CHANGED_FILES_COUNT === '1') {
             for (const entry of process.env.ALL_CHANGED_FILES){
+                console.log(entry)
                 if (entry === 'versions.yaml') {
                     versionChanged = 'true'
                 }
