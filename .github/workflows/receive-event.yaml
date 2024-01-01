@@ -1,0 +1,14 @@
+name: 'Receive event from another workflow'
+on:
+  repository_dispatch:
+    types: [run-functional-tests]
+jobs:
+  execute-functional-tests-run:
+    name: 'Approve Functional Tests'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Try to run functional tests
+      if: github.event_name == 'repository_dispatch' && github.event.client_payload.versionChanged == 'true'
+      run: |
+        echo version has changed - ${{ github.event.action }}
+ 

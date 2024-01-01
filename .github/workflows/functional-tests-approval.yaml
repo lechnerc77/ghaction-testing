@@ -3,8 +3,6 @@ on:
   pull_request:
     branches:
       - main
-      - features/*
-      - release/*
 jobs:
   approve-functional-tests-run:
     name: 'Approve Functional Tests'
