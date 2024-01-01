@@ -28,33 +28,30 @@ jobs:
       with:
         json: true
         escape_json: false
-    - name: List all changed files
-      run: echo '${{ steps.changed-files.outputs.all_changed_files }}'
-    #  - name: Evaluate changed files
-    #  env:
-    #    ALL_CHANGED_FILES_COUNT: ${{ steps.changed-files.outputs.all_changed_files_count }}
-    #    ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
-    #  uses: actions/github-script@v7
-    #  with:
-    #    github-token: ${{ secrets.GH_ACTION_DISPATCH }}
-    #    script: |
-    #      versionChanged = 'false';
-    #      if (process.env.ALL_CHANGED_FILES_COUNT === '1') {
-    #        process.env.ALL_CHANGED_FILES.forEach(file => {
-    #            if (file === 'versions.yaml') {
-    #                versionChanged = 'true';
-    #            }
-    #        });
-    #      }
-    #      
-    #      console.log(`ALL_CHANGED_FILES_COUNT: ${process.env.ALL_CHANGED_FILES_COUNT}`);
-    #      console.log(`versionChanged: ${versionChanged}`);
-#
-    #      github.rest.repos.createDispatchEvent({
-    #        owner: "lechnerc77",
-    #        repo: "ghaction-testing",
-    #        event_type: "run-functional-tests",
-    #        client_payload: {
-    #            "versionChanged": versionChanged
-    #        }
-    #      })
+    - name: Evaluate changed files
+      env:
+        ALL_CHANGED_FILES_COUNT: ${{ steps.changed-files.outputs.all_changed_files_count }}
+        ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+      uses: actions/github-script@v7
+      with:
+        github-token: ${{ secrets.GH_ACTION_DISPATCH }}
+        script: |
+          versionChanged = 'false';
+          if (process.env.ALL_CHANGED_FILES_COUNT === '1') {
+            process.env.ALL_CHANGED_FILES.forEach(file => {
+                if (file === 'versions.yaml') {
+                    versionChanged = 'true';
+                }
+            });
+          }
+          
+          console.log(`ALL_CHANGED_FILES_COUNT: ${process.env.ALL_CHANGED_FILES_COUNT}`);
+          console.log(`versionChanged: ${versionChanged}`);
+          github.rest.repos.createDispatchEvent({
+            owner: "lechnerc77",
+            repo: "ghaction-testing",
+            event_type: "run-functional-tests",
+            client_payload: {
+                "versionChanged": versionChanged
+            }
+          })
