@@ -36,17 +36,17 @@ jobs:
       with:
         github-token: ${{ secrets.GH_ACTION_DISPATCH }}
         script: |
-          versionChanged = 'false';
+          versionChanged = 'false'
           if (process.env.ALL_CHANGED_FILES_COUNT === '1') {
-            process.env.ALL_CHANGED_FILES.forEach(file => {
+            for (const entry of process.env.ALL_CHANGED_FILES){
                 if (file === 'versions.yaml') {
-                    versionChanged = 'true';
+                    versionChanged = 'true'
                 }
-            });
+            }
           }
           
-          console.log(`ALL_CHANGED_FILES_COUNT: ${process.env.ALL_CHANGED_FILES_COUNT}`);
-          console.log(`versionChanged: ${versionChanged}`);
+          console.log(`Number of changed files: ${process.env.ALL_CHANGED_FILES_COUNT}`);
+          console.log(`Exclusive change of version.yaml detected: ${versionChanged}`);
           github.rest.repos.createDispatchEvent({
             owner: "lechnerc77",
             repo: "ghaction-testing",
