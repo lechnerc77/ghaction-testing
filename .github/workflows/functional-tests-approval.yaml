@@ -26,8 +26,8 @@ jobs:
       id: changed-files
       uses: tj-actions/changed-files@v41
       with:
-        json: true
-        escape_json: false
+        files_separator: ','
+
     - name: Evaluate changed files
       env:
         ALL_CHANGED_FILES_COUNT: ${{ steps.changed-files.outputs.all_changed_files_count }}
@@ -36,11 +36,12 @@ jobs:
       with:
         github-token: ${{ secrets.GH_ACTION_DISPATCH }}
         script: |
-          versionChanged = 'false'
+          let versionChanged = 'false'
+          let changedFiles = process.env.ALL_CHANGED_FILES.split(',')
           if (process.env.ALL_CHANGED_FILES_COUNT === '1') {
-            for (const entry of process.env.ALL_CHANGED_FILES){
-                console.log(entry)
-                if (entry === 'versions.yaml') {
+            for (const fileName of changedFiles){
+                console.log(fileName)
+                if (fileName === 'versions.yaml') {
                     versionChanged = 'true'
                 }
             }
