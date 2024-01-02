@@ -49,7 +49,7 @@ jobs:
           
           github.rest.repos.createDispatchEvent({
             owner: "lechnerc77",
-            repo: "gh-action-test",
+            repo: "ghaction-testing",
             event_type: "functional-tests-approved",
             client_payload: {
                 "versionsChangedOnly": versionsChangedOnly
