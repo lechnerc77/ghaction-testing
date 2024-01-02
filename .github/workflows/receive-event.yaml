@@ -63,7 +63,7 @@ jobs:
   execute-functional-tests-run:
     name: 'Approve Functional Tests'
     runs-on: ubuntu-latest
-    needs: preprocess
+    needs: [preprocess, check-output]
     if: needs.preprocess.outputs.SKIP_FUNCTIONAL_TESTS == 'false'
     env:
       TRIGGER: ${{ needs.preprocess.outputs.TRIGGER }}
