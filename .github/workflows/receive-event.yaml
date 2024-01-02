@@ -20,7 +20,7 @@ jobs:
           ONLY_VERSIONS_CHANGED: ${{ github.event.client_payload.versionsChangedOnly }}
         uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.GH_RAD_CI_BOT_PAT }}
+          github-token: ${{ secrets.GH_ACTION_DISPATCH }}
           script: |
             let fs = require('fs');
             let trigger = 'unknown';
