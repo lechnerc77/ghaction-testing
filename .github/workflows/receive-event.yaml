@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       TRIGGER: ${{ steps.trigger.outputs.TRIGGER }}
-      SKIP_FUNC_TESTS: ${{ steps.trigger.outputs.SKIP_FUNC_TESTS }}
+      SKIP_FUNCTIONAL_TESTS: ${{ steps.trigger.outputs.SKIP_FUNCTIONAL_TESTS }}
     steps:
       - name: Determine trigger of workflow
         id: trigger
@@ -58,7 +58,7 @@ jobs:
     name: 'Approve Functional Tests'
     runs-on: ubuntu-latest
     needs: preprocess
-    if: needs.preprocess.outputs.SKIP_FUNC_TESTS == 'false'
+    if: needs.preprocess.outputs.SKIP_FUNCTIONAL_TESTS == 'false'
     env:
       TRIGGER: ${{ needs.preprocess.outputs.TRIGGER }}
     steps:
