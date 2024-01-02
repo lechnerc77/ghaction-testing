@@ -22,15 +22,9 @@ jobs:
         with:
           github-token: ${{ secrets.GH_ACTION_DISPATCH }}
           script: |
-            let fs = require('fs');
             let trigger = 'unknown';
             let skipFuncTests = false;
 
-            console.log('Event name: ' + process.env.EVENT_NAME);
-            console.log('Event type: ' + process.env.EVENT_TYPE);
-            console.log('Repository: ' + process.env.REPOSITORY);
-            console.log('Only versions changed: ' + process.env.ONLY_VERSIONS_CHANGED);
-            
             if (process.env.EVENT_NAME === 'workflow_dispatch' && process.env.REPOSITORY === 'lechnerc77/ghaction-testing') {
               trigger = 'dispatch'
             }
@@ -49,10 +43,8 @@ jobs:
               }
             }
 
-            fs.appendFileSync(process.env.GITHUB_ENV,
-              `TRIGGER=${trigger}\n`+
-              `SKIP_FUNCTIONAL_TESTS=${skipFuncTests}`
-            );
+            core.setOutput('TRIGGER', trigger);
+            core.setOutput('SKIP_FUNCTIONAL_TESTS', skipFuncTests);
   
   check-output:
     name: 'Check output'
